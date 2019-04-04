@@ -1,33 +1,23 @@
-<div class="example-container">
-  <h2>To do</h2>
+<div class="board" cdkDropList [cdkDropListData]="tracks" (cdkDropListDropped)="onTrackDrop($event)" cdkDropListOrientation="horizontal">
 
-  <div
-    cdkDropList
-    #todoList="cdkDropList"
-    [cdkDropListData]="todo"
-    [cdkDropListConnectedTo]="[doneList]"
-    class="example-list"
-    (cdkDropListDropped)="drop($event)">
-    <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+  <div class="card-list mat-elevation-z1" *ngFor="let track of tracks">
+
+    <h2 cdkDragHandle class="mat-h2">{{track.title}}</h2>
+
+    <div class="card-list-content" cdkDropList [id]="track.id" [cdkDropListData]="track.tasks"
+      [cdkDropListConnectedTo]="trackIds" (cdkDropListDropped)="onTalkDrop($event)">
+
+
+        <mat-card *ngFor="let task of track.tasks" cdkDrag>
+          <!-- Use the mat-card-content to add the proper spacing. -->
+          <mat-card-content>
+              {{task.title}}
+              <div *ngIf="author">{{task.description}}</div>
+          </mat-card-content>
+        </mat-card>
+
+    </div>
+
   </div>
+
 </div>
-
-<div class="example-container">
-  <h2>Done</h2>
-
-  <div
-    cdkDropList
-    #doneList="cdkDropList"
-    [cdkDropListData]="done"
-    [cdkDropListConnectedTo]="[todoList]"
-    class="example-list"
-    (cdkDropListDropped)="drop($event)">
-    <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
-  </div>
-</div>
-
-
-
-<!-- Copyright 2019 Google Inc. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at http://angular.io/license -->
